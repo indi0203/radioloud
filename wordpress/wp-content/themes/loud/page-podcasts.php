@@ -20,21 +20,37 @@ get_header(); ?>
         width: 100%;
     }
 
+    .antal {
+        margin-top: 0;
+    }
+
+    .navn {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
     @media (min-width: 800px) {
+
 
         /*---------------grid i desktop----------------*/
 
-        .grid {
+        #podcastcontainer {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-flow: dense;
+            grid-gap: 20px;
         }
-    }
+
+        /*Billederne som ikke tilhører de nedstående grid spans strækker sig kun 2 spans og fylder derfor mindre*/
+        .menu {
+            grid-column: span 2;
+        }
 
 </style>
 
 
 <template>
-    <article class="grid">
+    <article class="menu">
         <div class="container">
             <img src="" alt="" class="billede">
 
