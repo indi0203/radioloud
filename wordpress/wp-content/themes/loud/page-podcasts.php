@@ -16,6 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 <style>
+
+    .container_2 {
+  position: relative;
+}
+
     img {
         width: 100%;
     }
@@ -28,6 +33,87 @@ get_header(); ?>
         margin-bottom: 10px;
         margin-top: 10px;
     }
+
+    .container {
+        cursor: pointer;
+        color: white;
+        text-align: center;
+    }
+
+    button.filter {
+        background-color: #232323;
+        color: white;
+
+    }
+
+    .valgt {
+         background-color: #DB083A;
+    }
+
+    button.valgt {
+            background-color: #232323;
+         color: white;
+        text-align: center;
+        }
+
+     button.valgt:hover {
+        background-color: #DB083A;
+        color: white;
+
+    }
+
+    .main-navigation ul li a, article, aside, details, figcaption, figure, footer, header, main, nav, section {
+    text-align: center;
+}
+
+
+     button.filter:hover {
+        background-color: #DB083A;
+        color: white;
+         text-align: center;
+
+    }
+
+
+     button.filter:active {
+        background-color: #DB083A;
+        color: white;
+
+    }
+
+
+    #podcastcontainer {
+            margin: 60px;
+        }
+
+    img {
+        border-radius: 17px;
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+    }
+
+    .middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+    .container_2:hover img{
+        opacity: 0.3;
+    }
+
+        .container_2:hover .middle {
+  opacity: 1;
+}
 
     @media (min-width: 800px) {
 
@@ -52,7 +138,11 @@ get_header(); ?>
 <template>
     <article class="menu">
         <div class="container">
+           <div class="container_2">
             <img src="" alt="" class="billede">
+            <div class="middle"><p class="kort"></p>
+            </div>
+            </div>
 
             <h3 class="navn">
             </h3>
@@ -66,46 +156,96 @@ get_header(); ?>
     <main id="main" <?php lalita_main_class(); ?>>
 
 
+        <nav id="filtrering" class="filter">
+        <button data-podcast="alle" class="valgt">Alle</button>
+        </nav>
+
+
+
+
         <section id="podcastcontainer"></section>
 
     </main><!-- #main -->
 
     <script>
         let podcasts;
+        let categories;
+        let filterPodcast = "alle";
+
+
+        function start() {
+            const filterKnapper = document.querySelectorAll(".filter button");
+            filterKnapper.forEach(knap => knap.addEventListener("click", filtrerMenu));
+            loadJSON();
+        }
+
+        function filtrerMenu() {
+            filter = this.dataset.podcast; //sæt variabel "filter" til værdien af data-troende på den knap der er klikket på
+            console.log("filter", filter);
+            document.querySelector(".valgt").classList.remove("valgt");
+            this.classList.add("valgt");
+        }
+
+
         const dbUrl = "http://indiamillward.dk/radioloud/wp-json/wp/v2/podcast?per_page=100";
+
+        const catURL = "http://indiamillward.dk/radioloud/wp-json/wp/v2/categories";
+
 
         async function getJson() {
             const data = await fetch(dbUrl);
+            const catdata = await fetch(catURL);
             podcasts = await data.json();
-            console.log(podcasts);
+             categories = await catdata.json();
+            console.log(categories);
             visPodcasts();
+            opretknapper();
         }
 
-        function visPodcasts() {
-            let temp = document.querySelector("template");
-            let container = document.querySelector("#podcastcontainer");
-            podcasts.forEach(podcast => {
-                let klon = temp.cloneNode(true).content;
-                klon.querySelector("h3").textContent = podcast.title.rendered;
-                klon.querySelector("img").src = podcast.billede.guid;
-                klon.querySelector(".antal").textContent = podcast.antal;
-                container.appendChild(klon);
+             function opretknapper(){
+            categories.forEach(cat =>{
+                document.querySelector("#filtrering").innerHTML += `<button class="filter" data-podcast="${cat.id}">${cat.name}</button>`
+            })
+
+            addEventListenerToButtons();
+        }
+
+
+        function addEventListenerToButtons(){
+            document.querySelectorAll("#filtrering button").forEach(elm =>{
+                elm.addEventListener("click", filtrering);
 
             })
 
         }
 
+        function filtrering(){
+            filterPodcast = this.dataset.podcast;
+            console.log(filterPodcast);
+            visPodcasts();
+        }
 
-        //        function visPodcasts() {
-        //
-        // let temp = document.querySelector("template");
-        // let container = document.querySelector("#liste");
-        // podcasts.forEach(podcast => {
-        // let klon = temp.cloneNode(true).content;
-        // klon.querySelector("h3").textContent = podcast.title.rendered;
-        // klon.querySelector("img").src = podcast.billede.guid
-        // container.appendChild(klon);
-        // })
+
+
+        function visPodcasts() {
+            let temp = document.querySelector("template");
+            let container = document.querySelector("#podcastcontainer");
+             container.innerHTML = "";
+            podcasts.forEach(podcast => {
+                if( filterPodcast == "alle" || podcast.categories.includes(parseInt(filterPodcast))){
+                let klon = temp.cloneNode(true).content;
+                klon.querySelector("h3").textContent = podcast.title.rendered;
+                klon.querySelector("img").src = podcast.billede.guid;
+                klon.querySelector(".antal").textContent = podcast.antal;
+                klon.querySelector(".kort").textContent = podcast.kort;
+                klon.querySelector("article").addEventListener("click", ()=> {location.href = podcast.link;})
+                container.appendChild(klon);
+                }
+            })
+
+        }
+
+
 
         getJson();
 
