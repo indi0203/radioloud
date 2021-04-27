@@ -20,9 +20,19 @@ get_header(); ?>
         margin: 60px;
     }
 
+    img {
+        width: 100%;
+    }
+
     h3,
-    p {
+    p,
+    h2 {
         color: white
+    }
+
+    #pods h2 {
+        text-align: center;
+        padding-top: 50px;
     }
 
     button.knap {
@@ -33,7 +43,6 @@ get_header(); ?>
     button.knap:hover {
         background-color: #DB083A;
         color: white;
-
     }
 
     img {
@@ -42,7 +51,6 @@ get_header(); ?>
 
     h3 {
         font-size: 2.5rem;
-
     }
 
     p {
@@ -50,14 +58,45 @@ get_header(); ?>
         line-height: 30px;
     }
 
+    .center {
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .center img {
+        opacity: 0.3;
+    }
+
+    .center:hover {
+        margin-top: -5px;
+    }
+
+    .center h2 {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.8rem;
+
+    }
+
+
     @media (min-width: 850px) {
 
         /*---------------grid på desktop--------------------*/
 
-        #pods {
+        #grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-gap: 25px;
+        }
+
+        #episoder {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 40px;
+
         }
 
     }
@@ -69,31 +108,34 @@ get_header(); ?>
 
 
         <div class="knap">
-            <button class="knap">Tilbage til menu</button>
+            <button class="knap">Tilbage til podcasts</button>
         </div>
 
         <article id="pods">
+            <div id="grid">
 
-            <img src="" alt="" class="billede">
-            <div class="container">
+                <img src="" alt="" class="billede">
+                <div class="container">
 
-                <h3 class="navn">
-                </h3>
-                <p class="beskrivelse"></p>
-                <p class="spotify"></p>
+                    <h3 class="navn">
+                    </h3>
+                    <p class="beskrivelse"></p>
+                    <p class="spotify"></p>
+                </div>
             </div>
+
+            <h2>Andre episoder fra:</h2>
 
         </article>
 
 
         <section id="episoder">
             <template>
-                <article>
+                <article class="center">
                     <img src="" alt="">
                     <div>
                         <h2></h2>
                         <p class="beskrivelse"></p>
-                        <a href="">læs mere</a>
                     </div>
                 </article>
             </template>
@@ -133,6 +175,7 @@ get_header(); ?>
             document.querySelector(".billede").src = podcast.billede.guid
             document.querySelector(".beskrivelse").textContent = podcast.beskrivelse;
             document.querySelector(".spotify").textContent = podcast.spotify;
+            document.querySelector("h2").innerHTML = `Andre podcasts fra ${podcast.title.rendered} `;
             //eventlistener på tilbageknappen
             document.querySelector("button").addEventListener("click", tilbageTilPodcasts);
         }
@@ -147,11 +190,14 @@ get_header(); ?>
                     console.log("loop kører id:", aktuelpodcast);
                     let klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = episode.title.rendered;
+                    klon.querySelector("img").src = episode.billede.guid;
                     klon.querySelector("article").addEventListener("click", () => {
                         location.href = episode.link;
                     })
-                    klon.querySelector("a").href = episode.link;
                     console.log("episode", episode.link);
+                    klon.querySelector("article").addEventListener("click", () => {
+                        location.href = episode.link;
+                    })
                     container.appendChild(klon);
 
                 }
