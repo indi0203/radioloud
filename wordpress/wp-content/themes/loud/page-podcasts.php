@@ -16,10 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 <style>
-
     .container_2 {
-  position: relative;
-}
+        position: relative;
+    }
+
+    main {
+        padding-top: 100px;
+    }
 
     img {
         width: 100%;
@@ -40,80 +43,87 @@ get_header(); ?>
         text-align: center;
     }
 
+
     button.filter {
         background-color: #232323;
         color: white;
+        padding: 16px 20px 16px 20px;
+        margin-right: 10px;
+        margin-left: 10px;
 
     }
 
-    .valgt {
-         background-color: #DB083A;
+    button.filter:hover {
+        background-color: #fcd535;
+        border-radius: 7px;
+
     }
 
-    button.valgt {
-            background-color: #232323;
-         color: white;
+    .elementor-kit-4 button:hover,
+    .elementor-kit-4 button:focus,
+    .elementor-kit-4 input[type="button"]:hover,
+    .elementor-kit-4 input[type="button"]:focus,
+    .elementor-kit-4 input[type="submit"]:hover,
+    .elementor-kit-4 input[type="submit"]:focus,
+    .elementor-kit-4 .elementor-button:hover,
+    .elementor-kit-4 .elementor-button:focus {
+        background-color: #fcd535;
+    }
+
+    .main-navigation ul li a,
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    main,
+    nav,
+    section {
         text-align: center;
-        }
-
-     button.valgt:hover {
-        background-color: #DB083A;
-        color: white;
-
     }
-
-    .main-navigation ul li a, article, aside, details, figcaption, figure, footer, header, main, nav, section {
-    text-align: center;
-}
-
-
-     button.filter:hover {
-        background-color: #DB083A;
-        color: white;
-         text-align: center;
-
-    }
-
-
-     button.filter:active {
-        background-color: #DB083A;
-        color: white;
-
-    }
-
 
     #podcastcontainer {
-            margin: 60px;
-        }
+        margin: 60px;
+    }
 
     img {
         border-radius: 17px;
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
     }
 
     .middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }
 
-    .container_2:hover img{
+    .container_2:hover img {
         opacity: 0.3;
     }
 
-        .container_2:hover .middle {
-  opacity: 1;
-}
+    .container_2:hover .middle {
+        opacity: 1;
+    }
+
+    button.active {
+        background-color: #fcd535;
+        padding: 16px 20px 16px 20px;
+        border-radius: 7px;
+    }
+
+
 
     @media (min-width: 800px) {
 
@@ -124,7 +134,7 @@ get_header(); ?>
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-auto-flow: dense;
-            grid-gap: 20px;
+            grid-gap: 40px;
         }
 
         /*Billederne som ikke tilhører de nedstående grid spans strækker sig kun 2 spans og fylder derfor mindre*/
@@ -138,10 +148,11 @@ get_header(); ?>
 <template>
     <article class="menu">
         <div class="container">
-           <div class="container_2">
-            <img src="" alt="" class="billede">
-            <div class="middle"><p class="kort"></p>
-            </div>
+            <div class="container_2">
+                <img src="" alt="" class="billede">
+                <div class="middle">
+                    <p class="kort"></p>
+                </div>
             </div>
 
             <h3 class="navn">
@@ -156,11 +167,12 @@ get_header(); ?>
     <main id="main" <?php lalita_main_class(); ?>>
 
 
-        <nav id="filtrering" class="filter">
-        <button data-podcast="alle" class="valgt">Alle</button>
+        </section>
+
+
+        <nav id="filtrering">
+
         </nav>
-
-
 
 
         <section id="podcastcontainer"></section>
@@ -172,21 +184,6 @@ get_header(); ?>
         let categories;
         let filterPodcast = "alle";
 
-
-        function start() {
-            const filterKnapper = document.querySelectorAll(".filter button");
-            filterKnapper.forEach(knap => knap.addEventListener("click", filtrerMenu));
-            loadJSON();
-        }
-
-        function filtrerMenu() {
-            filter = this.dataset.podcast; //sæt variabel "filter" til værdien af data-troende på den knap der er klikket på
-            console.log("filter", filter);
-            document.querySelector(".valgt").classList.remove("valgt");
-            this.classList.add("valgt");
-        }
-
-
         const dbUrl = "http://indiamillward.dk/radioloud/wp-json/wp/v2/podcast?per_page=100";
 
         const catURL = "http://indiamillward.dk/radioloud/wp-json/wp/v2/categories";
@@ -196,14 +193,14 @@ get_header(); ?>
             const data = await fetch(dbUrl);
             const catdata = await fetch(catURL);
             podcasts = await data.json();
-             categories = await catdata.json();
+            categories = await catdata.json();
             console.log(categories);
             visPodcasts();
             opretknapper();
         }
 
-             function opretknapper(){
-            categories.forEach(cat =>{
+        function opretknapper() {
+            categories.forEach(cat => {
                 document.querySelector("#filtrering").innerHTML += `<button class="filter" data-podcast="${cat.id}">${cat.name}</button>`
             })
 
@@ -211,41 +208,51 @@ get_header(); ?>
         }
 
 
-        function addEventListenerToButtons(){
-            document.querySelectorAll("#filtrering button").forEach(elm =>{
+        function addEventListenerToButtons() {
+            document.querySelectorAll("#filtrering button").forEach(elm => {
                 elm.addEventListener("click", filtrering);
 
             })
 
         }
 
-        function filtrering(){
+        function filtrering() {
             filterPodcast = this.dataset.podcast;
             console.log(filterPodcast);
             visPodcasts();
-        }
+            this.classList.add("active");
 
+            document.querySelectorAll("#filtrering button").forEach(elm => {
+                elm.classList.remove("active")
+            });
+
+            filterPodcast = this.dataset.podcast;
+            console.log(filterPodcast);
+
+            this.classList.add("active");
+            visPodcasts();
+        }
 
 
         function visPodcasts() {
             let temp = document.querySelector("template");
             let container = document.querySelector("#podcastcontainer");
-             container.innerHTML = "";
+            container.innerHTML = "";
             podcasts.forEach(podcast => {
-                if( filterPodcast == "alle" || podcast.categories.includes(parseInt(filterPodcast))){
-                let klon = temp.cloneNode(true).content;
-                klon.querySelector("h3").textContent = podcast.title.rendered;
-                klon.querySelector("img").src = podcast.billede.guid;
-                klon.querySelector(".antal").textContent = podcast.antal;
-                klon.querySelector(".kort").textContent = podcast.kort;
-                klon.querySelector("article").addEventListener("click", ()=> {location.href = podcast.link;})
-                container.appendChild(klon);
+                if (filterPodcast == "alle" || podcast.categories.includes(parseInt(filterPodcast))) {
+                    let klon = temp.cloneNode(true).content;
+                    klon.querySelector("h3").textContent = podcast.title.rendered;
+                    klon.querySelector("img").src = podcast.billede.guid;
+                    klon.querySelector(".antal").textContent = podcast.antal;
+                    klon.querySelector(".kort").textContent = podcast.kort;
+                    klon.querySelector("article").addEventListener("click", () => {
+                        location.href = podcast.link;
+                    })
+                    container.appendChild(klon);
                 }
             })
 
         }
-
-
 
         getJson();
 

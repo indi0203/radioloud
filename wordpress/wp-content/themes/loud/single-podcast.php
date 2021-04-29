@@ -18,31 +18,65 @@ get_header(); ?>
 <style>
     #main {
         margin: 60px;
+        padding-top: 100px;
     }
 
     img {
         width: 100%;
     }
 
+
     h3,
-    p,
     h2 {
-        color: white
+        color: #232323;
+        font-family: "Roboto", Sans-serif;
+    }
+
+    h3.navn {
+        padding-top: 31px;
+    }
+
+    h4 {
+        color: #232323;
+        font-family: "Roboto", Sans-serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+    }
+
+    body {
+        font-family: "Roboto", Sans-serif;
+    }
+
+    p {
+        font-family: "Libre Franklin", Sans-serif;
+        color: #232323;
+        font-weight: 400;
     }
 
     #pods h2 {
         text-align: center;
         padding-top: 50px;
+        font-weight: 400;
     }
 
     button.knap {
-        background-color: #232323;
+        background-color: #fcd535;
         color: white;
+        border-radius: 7px;
+        font-family: "Roboto", Sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 16px 20px 16px 20px;
     }
 
     button.knap:hover {
-        background-color: #DB083A;
+        background-color: #FCDE61;
         color: white;
+        transform: scale(1.1);
+    }
+
+    .knap {
+        padding-bottom: 30px;
     }
 
     img {
@@ -65,7 +99,8 @@ get_header(); ?>
     }
 
     .center img {
-        opacity: 0.3;
+        opacity: 0.5;
+        background-color: #232323;
     }
 
     .center:hover {
@@ -81,6 +116,20 @@ get_header(); ?>
 
     }
 
+    #primary {
+        background-color: #ffd8e2;
+    }
+
+    h4 {
+        color: #232323;
+        text-align: center;
+        padding-top: 40px;
+        padding-bottom: 10px;
+    }
+
+    .stream a:hover {
+        margin-top: -5px;
+    }
 
     @media (min-width: 850px) {
 
@@ -97,6 +146,12 @@ get_header(); ?>
             grid-template-columns: 1fr 1fr 1fr;
             grid-gap: 40px;
 
+        }
+
+        .stream {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 35px;
         }
 
     }
@@ -120,17 +175,44 @@ get_header(); ?>
                     <h3 class="navn">
                     </h3>
                     <p class="beskrivelse"></p>
-                    <p class="spotify"></p>
+
+                    <h4>Lyt med her:</h4>
+                    <div class="stream">
+
+
+                        <a href="" class="spotify">
+                            <img src="" alt="" class="logos">
+                        </a>
+                        <a href="" class="apple">
+                            <img src="" alt="" class="logoa">
+                        </a>
+                        <a href="" class="google">
+                            <img src="" alt="" class="logog">
+                        </a>
+                        <a href="" class="podimo">
+                            <img src="" alt="" class="logop">
+                        </a>
+                    </div>
+
+
                 </div>
             </div>
 
+
             <h2>Andre episoder fra:</h2>
+
+
 
         </article>
 
 
+
         <section id="episoder">
+
+
             <template>
+
+
                 <article class="center">
                     <img src="" alt="">
                     <div>
@@ -141,6 +223,8 @@ get_header(); ?>
             </template>
         </section>
     </main><!-- #main -->
+
+
 
 
 
@@ -172,10 +256,27 @@ get_header(); ?>
         function visPodcasts() {
 
             document.querySelector("h3").textContent = podcast.title.rendered;
-            document.querySelector(".billede").src = podcast.billede.guid
+            document.querySelector(".billede").src = podcast.billede.guid;
+
+
             document.querySelector(".beskrivelse").textContent = podcast.beskrivelse;
-            document.querySelector(".spotify").textContent = podcast.spotify;
             document.querySelector("h2").innerHTML = `Andre podcasts fra ${podcast.title.rendered} `;
+
+
+            //Logo
+
+            document.querySelector(".logos").src = podcast.spotify_logo.guid;
+            document.querySelector(".spotify").href = podcast.spotify;
+
+            document.querySelector(".logoa").src = podcast.apple_logo.guid;
+            document.querySelector(".apple").href = podcast.apple;
+
+            document.querySelector(".logog").src = podcast.google_logo.guid;
+            document.querySelector(".google").href = podcast.google;
+
+            document.querySelector(".logop").src = podcast.podimo_logo.guid;
+            document.querySelector(".podimo").href = podcast.podimo;
+
             //eventlistener på tilbageknappen
             document.querySelector("button").addEventListener("click", tilbageTilPodcasts);
         }

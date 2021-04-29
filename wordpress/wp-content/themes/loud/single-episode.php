@@ -13,31 +13,55 @@ get_header(); ?>
 <style>
     #main {
         margin: 60px;
+        padding-top: 100px;
     }
 
     img {
         width: 100%;
     }
 
+
     h3,
-    p,
     h2 {
-        color: white
+        color: #232323;
+        font-family: "Roboto", Sans-serif;
+    }
+
+    p {
+        font-family: "Libre Franklin", Sans-serif;
+        color: #232323;
+        font-weight: 400;
+    }
+
+
+    #primary {
+        background-color: #ffd8e2;
     }
 
     #pods h2 {
         text-align: center;
         padding-top: 50px;
+        font-weight: 400;
     }
 
     button.knap {
-        background-color: #232323;
+        background-color: #fcd535;
         color: white;
+        border-radius: 7px;
+        font-family: "Roboto", Sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 16px 20px 16px 20px;
     }
 
     button.knap:hover {
-        background-color: #DB083A;
+        background-color: #FCDE61;
         color: white;
+        transform: scale(1.1);
+    }
+
+    .knap {
+        padding-bottom: 30px;
     }
 
     img {
@@ -53,6 +77,17 @@ get_header(); ?>
         line-height: 30px;
     }
 
+    h4 {
+        color: #232323;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .stream a:hover {
+        margin-top: -5px;
+    }
+
 
 
 
@@ -66,6 +101,13 @@ get_header(); ?>
             grid-gap: 25px;
         }
 
+        .stream {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 35px;
+        }
+
+
     }
 
 </style>
@@ -75,7 +117,7 @@ get_header(); ?>
 
 
         <div class="knap">
-            <button class="knap">Tilbage til menu</button>
+            <button class="knap">Tilbage</button>
         </div>
 
         <article id="pods">
@@ -86,17 +128,34 @@ get_header(); ?>
 
                     <h3 class="navn">
                     </h3>
+
+                    <p class="længde"></p>
                     <p class="beskrivelse"></p>
+
+                    <h4>Lyt med her:</h4>
+                    <div class="stream">
+
+                        <img src="" alt="" class="logos">
+                        <img src="" alt="" class="logoa">
+                        <img src="" alt="" class="logog">
+                        <img src="" alt="" class="logop">
+
+                    </div>
                 </div>
+
+
             </div>
 
         </article>
+
+
 
 
     </main><!-- #main -->
 
     <script>
         let episode;
+        let flere;
         let aktuelpodcast = <?php echo get_the_ID()?>;
 
         const dbURL = "http://indiamillward.dk/radioloud/wp-json/wp/v2/episode/" + aktuelpodcast;
@@ -112,9 +171,30 @@ get_header(); ?>
             document.querySelector("h3").textContent = episode.title.rendered;
             document.querySelector(".billede").src = episode.billede.guid
             document.querySelector(".beskrivelse").textContent = episode.beskrivelse;
+
+
+            document.querySelector(".længde").innerHTML = `<b>Varighed: </b> ${episode.lngde} `
+
+
+            //Logo
+
+            document.querySelector(".logos").src = episode.spotify_logo.guid;
+
+            document.querySelector(".logoa").src = episode.apple_logo.guid;
+
+            document.querySelector(".logog").src = episode.google_logo.guid;
+
+            document.querySelector(".logop").src = episode.podimo_logo.guid;
+
             //eventlistener på tilbageknappen
             document.querySelector("button").addEventListener("click", tilbageTilPodcasts);
         }
+
+
+
+
+
+
 
 
         //eventhandler på knappen
