@@ -16,6 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 <style>
+    main {
+        background-color: #FFD8E2;
+    }
+
+    #filtrering {
+        background-color: #232323;
+    }
+
+    #podcastcontainer {
+        margin: 0;
+        padding: 30px;
+        background-color: #232323;
+
+    }
+
+
     .container_2 {
         position: relative;
     }
@@ -34,7 +50,9 @@ get_header(); ?>
 
     .navn {
         margin-bottom: 10px;
-        margin-top: 10px;
+        margin-top: 15px;
+        font-family: "Roboto", Sans-serif;
+
     }
 
     .container {
@@ -50,6 +68,9 @@ get_header(); ?>
         padding: 16px 20px 16px 20px;
         margin-right: 10px;
         margin-left: 10px;
+        font-family: "Roboto", Sans-serif;
+        margin-top: 70px;
+        border-radius: 7px;
 
     }
 
@@ -84,9 +105,7 @@ get_header(); ?>
         text-align: center;
     }
 
-    #podcastcontainer {
-        margin: 60px;
-    }
+
 
     img {
         border-radius: 17px;
@@ -123,9 +142,39 @@ get_header(); ?>
         border-radius: 7px;
     }
 
+    p {
+
+        font-family: "Libre Franklin", Sans-serif;
+        font-weight: 400;
+        font-size: 1.1rem;
+        line-height: 30px;
+
+    }
+
+    .kort {
+        font-size: 0.9rem;
+    }
+
+    @media (min-width: 490px) {
+
+        .kort {
+
+
+            font-size: 1.1rem;
+
+
+        }
+    }
 
 
     @media (min-width: 800px) {
+
+        #podcastcontainer {
+            margin: 0;
+            padding: 60px;
+
+
+        }
 
 
         /*---------------grid i desktop----------------*/
@@ -166,16 +215,43 @@ get_header(); ?>
 <div id="primary" <?php lalita_content_class();?>>
     <main id="main" <?php lalita_main_class(); ?>>
 
+        <?php
+			/**
+			 * lalita_before_main_content hook.
+			 *
+			 */
+			do_action( 'lalita_before_main_content' );
 
-        </section>
+			while ( have_posts() ) : the_post();
+
+				get_template_part( 'content', 'page' );
+
+				// If comments are open or we have at least one comment, load up the comment template.
+				if ( comments_open() || '0' != get_comments_number() ) : ?>
+
+        <div class="comments-area">
+            <?php comments_template(); ?>
+        </div>
+
+        <?php endif;
+
+			endwhile;
+
+			/**
+			 * lalita_after_main_content hook.
+			 *
+			 */
+			do_action( 'lalita_after_main_content' );
+			?>
 
 
         <nav id="filtrering">
-
         </nav>
 
 
         <section id="podcastcontainer"></section>
+
+
 
     </main><!-- #main -->
 

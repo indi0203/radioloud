@@ -11,13 +11,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 <style>
-    #main {
-        margin: 60px;
+    #primary {
+        margin: 0;
         padding-top: 100px;
+        padding-left: 30px;
+        padding-right: 30px;
+        background-color: #FCDE61;
+        padding-bottom: 50px;
     }
 
     img {
         width: 100%;
+    }
+
+    h3.navn {
+        padding-top: 31px;
     }
 
 
@@ -34,9 +42,6 @@ get_header(); ?>
     }
 
 
-    #primary {
-        background-color: #ffd8e2;
-    }
 
     #pods h2 {
         text-align: center;
@@ -45,7 +50,7 @@ get_header(); ?>
     }
 
     button.knap {
-        background-color: #fcd535;
+        background-color: #232323;
         color: white;
         border-radius: 7px;
         font-family: "Roboto", Sans-serif;
@@ -55,7 +60,7 @@ get_header(); ?>
     }
 
     button.knap:hover {
-        background-color: #FCDE61;
+        background-color: #232323;
         color: white;
         transform: scale(1.1);
     }
@@ -88,6 +93,23 @@ get_header(); ?>
         margin-top: -5px;
     }
 
+    @media (max-width: 950px) {
+
+        .logoa,
+        .logop,
+        .logos,
+        .logog {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 27px;
+
+
+        }
+
+    }
+
 
 
 
@@ -105,6 +127,13 @@ get_header(); ?>
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-gap: 35px;
+        }
+
+        #primary {
+            margin: 0;
+            padding-top: 100px;
+            padding-left: 60px;
+            padding-right: 60px;
         }
 
 

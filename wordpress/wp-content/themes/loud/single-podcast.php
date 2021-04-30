@@ -16,9 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 
 <style>
-    #main {
-        margin: 60px;
+    #primary {
+        margin: 0;
         padding-top: 100px;
+        padding-left: 30px;
+        padding-right: 30px;
+        background-color: #FCDE61;
+        padding-bottom: 50px;
     }
 
     img {
@@ -55,12 +59,12 @@ get_header(); ?>
 
     #pods h2 {
         text-align: center;
-        padding-top: 50px;
+        padding-top: 65px;
         font-weight: 400;
     }
 
     button.knap {
-        background-color: #fcd535;
+        background-color: #232323;
         color: white;
         border-radius: 7px;
         font-family: "Roboto", Sans-serif;
@@ -70,7 +74,7 @@ get_header(); ?>
     }
 
     button.knap:hover {
-        background-color: #FCDE61;
+        background-color: #232323;
         color: white;
         transform: scale(1.1);
     }
@@ -116,9 +120,6 @@ get_header(); ?>
 
     }
 
-    #primary {
-        background-color: #ffd8e2;
-    }
 
     h4 {
         color: #232323;
@@ -131,7 +132,28 @@ get_header(); ?>
         margin-top: -5px;
     }
 
-    @media (min-width: 850px) {
+    @media (max-width: 950px) {
+
+        .logoa,
+        .logop,
+        .logos,
+        .logog {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 27px;
+
+
+        }
+
+    }
+
+
+
+
+
+    @media (min-width: 950px) {
 
         /*---------------grid på desktop--------------------*/
 
@@ -154,12 +176,22 @@ get_header(); ?>
             grid-gap: 35px;
         }
 
+        #primary {
+            margin: 0;
+            padding-top: 100px;
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+
+
+
     }
 
 </style>
 
 <div id="primary" <?php lalita_content_class();?>>
     <main id="main" <?php lalita_main_class(); ?>>
+
 
 
         <div class="knap">
