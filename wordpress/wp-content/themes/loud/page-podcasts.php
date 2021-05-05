@@ -166,8 +166,30 @@ get_header(); ?>
         }
     }
 
+    @media (min-width: 700px) {
 
-    @media (min-width: 800px) {
+
+        /*---------------grid i desktop----------------*/
+
+        #podcastcontainer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 40px;
+        }
+
+        #podcastcontainer {
+            margin: 0;
+            padding: 60px;
+
+
+        }
+
+    }
+
+
+
+
+    @media (min-width: 1050px) {
 
         #podcastcontainer {
             margin: 0;
