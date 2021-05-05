@@ -193,14 +193,12 @@ get_header(); ?>
     <main id="main" <?php lalita_main_class(); ?>>
 
 
-
         <div class="knap">
             <button class="knap">Tilbage til podcasts</button>
         </div>
 
         <article id="pods">
             <div id="grid">
-
                 <img src="" alt="" class="billede">
                 <div class="container">
 
@@ -261,42 +259,47 @@ get_header(); ?>
 
 
     <script>
+        //definerer podcast og episoder som lokale variabler
         let podcast;
         let episoder;
+
+        //aktuelpodcast henter ID'et (som er et tal) fra den valgte podcasts slug
         let aktuelpodcast = <?php echo get_the_ID()?>;
 
+        //definerer konstant som peget på den relevante podcast, altså URL'en til alle podcasts + det ID som den enkle podcast har.
         const dbURL = "http://indiamillward.dk/radioloud/wp-json/wp/v2/podcast/" + aktuelpodcast;
 
+        //henter alle episoder ned
         const episodeUrl = "http://indiamillward.dk/radioloud/wp-json/wp/v2/episode?per_page=100";
 
+        //episoderne bliver puttet ind i en container
         const container = document.querySelector("#episoder");
 
 
+        //funktion der henter alle Json dataen, både for podcast og episoder.
         async function getJson() {
+            //podcasts bliver hentet
             const data = await fetch(dbURL);
             podcast = await data.json();
 
+            //episoder bliver hentet
             const data2 = await fetch(episodeUrl);
             episoder = await data2.json();
             console.log("episoder: ", episoder)
 
+            //kalder funktionerne for at vise podcasts og episoder
             visPodcasts();
             visEpisoder();
         }
 
-
+        //kalder funktionen for at få den enkelte podcasts data ind.
         function visPodcasts() {
-
             document.querySelector("h3").textContent = podcast.title.rendered;
             document.querySelector(".billede").src = podcast.billede.guid;
-
-
             document.querySelector(".beskrivelse").textContent = podcast.beskrivelse;
             document.querySelector("h2").innerHTML = `Andre podcasts fra ${podcast.title.rendered} `;
 
-
             //Logo
-
             document.querySelector(".logos").src = podcast.spotify_logo.guid;
             document.querySelector(".spotify").href = podcast.spotify;
 
@@ -314,23 +317,29 @@ get_header(); ?>
         }
 
 
+        //kalder funktionen for at få vist episoderne på siden.
         function visEpisoder() {
             console.log("visEpisoder")
             let temp = document.querySelector("template");
             episoder.forEach(episode => {
                 console.log("loop id :", aktuelpodcast);
+                //filtrer det sådan at den kun viser de episoder som hører til den aktuelle podcast, så det vil sige at hvis ID'et til "hører til podcast" er det samme som ID'et fra den valgte podcast så bliver resten af dataen vist, og ellers springer den det andet over.
                 if (episode.horer_til_podcast == aktuelpodcast) {
                     console.log("loop kører id:", aktuelpodcast);
                     let klon = temp.cloneNode(true).content;
+                    //sætter titlen ind fra min skabelon i HTML'en.
                     klon.querySelector("h2").textContent = episode.title.rendered;
                     klon.querySelector("img").src = episode.billede.guid;
                     klon.querySelector("article").addEventListener("click", () => {
                         location.href = episode.link;
                     })
                     console.log("episode", episode.link);
+                    //når man klikker på den enkelte episode kommer man ind på dens singleview
                     klon.querySelector("article").addEventListener("click", () => {
                         location.href = episode.link;
                     })
+
+                    //kloner html template og lægger indholdet fra data ind i de relevante html elementer og tilføjer indhold.
                     container.appendChild(klon);
 
                 }
@@ -340,7 +349,7 @@ get_header(); ?>
 
         //eventhandler på knappen
         function tilbageTilPodcasts() {
-            //history = webapi for at komme baglængs, hvis vi kalder back kommer vi et hak tilbage i browserhistorien (dermed tilbage til 01-kald.html)
+            //history = webapi for at komme baglængs, hvis vi kalder back kommer vi et hak tilbage i browserhistorien
             history.back();
         }
 
