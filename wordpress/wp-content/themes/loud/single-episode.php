@@ -12,12 +12,13 @@ get_header(); ?>
 
 <style>
     #primary {
-        margin: 0;
-        padding-top: 100px;
+
+        padding-top: 140px;
         padding-left: 30px;
         padding-right: 30px;
-        background-color: #FCDE61;
+        background-color: #fdf4ce;
         padding-bottom: 50px;
+        margin-top: -90px;
     }
 
     img {
@@ -50,7 +51,7 @@ get_header(); ?>
     }
 
     button.knap {
-        background-color: #232323;
+        background-color: #fcde61;
         color: white;
         border-radius: 7px;
         font-family: "Roboto", Sans-serif;
@@ -60,8 +61,6 @@ get_header(); ?>
     }
 
     button.knap:hover {
-        background-color: #232323;
-        color: white;
         transform: scale(1.1);
     }
 
@@ -130,8 +129,7 @@ get_header(); ?>
         }
 
         #primary {
-            margin: 0;
-            padding-top: 100px;
+
             padding-left: 60px;
             padding-right: 60px;
         }

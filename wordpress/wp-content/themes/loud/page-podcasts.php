@@ -18,6 +18,11 @@ get_header(); ?>
 <style>
     main {
         background-color: #FFD8E2;
+
+    }
+
+    #main {
+        margin-top: -90px;
     }
 
     #filtrering {
@@ -65,31 +70,22 @@ get_header(); ?>
     button.filter {
         background-color: #232323;
         color: white;
-        padding: 16px 20px 16px 20px;
         margin-right: 10px;
         margin-left: 10px;
-        font-family: "Roboto", Sans-serif;
+        font-family: "Libre Franklin", Sans-serif;
         margin-top: 70px;
-        border-radius: 7px;
+        text-transform: uppercase;
+        font-weight: 400;
+
 
     }
 
     button.filter:hover {
-        background-color: #fcd535;
-        border-radius: 7px;
+        border-bottom: 0.5px solid white;
+
 
     }
 
-    .elementor-kit-4 button:hover,
-    .elementor-kit-4 button:focus,
-    .elementor-kit-4 input[type="button"]:hover,
-    .elementor-kit-4 input[type="button"]:focus,
-    .elementor-kit-4 input[type="submit"]:hover,
-    .elementor-kit-4 input[type="submit"]:focus,
-    .elementor-kit-4 .elementor-button:hover,
-    .elementor-kit-4 .elementor-button:focus {
-        background-color: #fcd535;
-    }
 
     .main-navigation ul li a,
     article,
@@ -137,9 +133,8 @@ get_header(); ?>
     }
 
     button.active {
-        background-color: #fcd535;
-        padding: 16px 20px 16px 20px;
-        border-radius: 7px;
+
+        border-bottom: 0.5px solid white;
     }
 
     p {
